@@ -1,13 +1,13 @@
-﻿using System;
-using System.Net;
-
-namespace WatchIndex
+﻿namespace WatchIndex
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            
+            using (var netflix = new NetflixAggregator())
+            {
+
+            }
         }
     }
 }
