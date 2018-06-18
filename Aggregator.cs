@@ -1,4 +1,6 @@
 using HtmlAgilityPack;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,22 +9,18 @@ namespace WatchIndex
 {
     public abstract class Aggregator : IDisposable
     {
-        private readonly HttpClient _httpClient;
+        private readonly IWebDriver _webDriver;
 
         public Aggregator()
         {
-            _httpClient = new HttpClient();
+            _webDriver = new ChromeDriver();
         }
 
-        public abstract Task Authenticate(string userName, string password);
+        public abstract Task Authenticate(string url, string userName, string password);
 
-        protected async Task<HtmlDocument> GetAsync(string uri)
+        protected async Task<HtmlDocument> GetAsync(string url)
         {
-            return await GetAsync(new Uri(uri));
-        }
-
-        protected async Task<HtmlDocument> GetAsync(Uri uri)
-        {
+            _webDriver.Url = uri;
             var response = await _httpClient.GetAsync(uri);
             response.EnsureSuccessStatusCode();
 
