@@ -1,17 +1,18 @@
 using HtmlAgilityPack;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using System;
 
 namespace WatchIndex
 {
     public abstract class Aggregator : IDisposable
     {
+        public abstract string ServiceKey { get; }
+
         protected readonly IWebDriver _webDriver;
 
-        protected Aggregator()
+        protected Aggregator(IWebDriver webDriver)
         {
-            _webDriver = new ChromeDriver("./Drivers/");
+            _webDriver = webDriver;
         }
 
         public abstract void Authenticate(string userName, string password);
