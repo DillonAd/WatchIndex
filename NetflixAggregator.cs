@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WatchIndex
 {
-    public class NetflixAggregator : Aggregator, IAggregator
+    public class NetflixAggregator : Aggregator
     {
         public override string ServiceKey { get; }
 
@@ -31,7 +31,7 @@ namespace WatchIndex
             submitBtn.Click();
         }
 
-        public IEnumerable<string> GetListings()
+        public override IEnumerable<string> GetListings()
         {
             const string listingUri = "https://www.netflix.com/search";
             const string formattableQueryString = "?q={0}";

@@ -1,6 +1,7 @@
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
 
 namespace WatchIndex
 {
@@ -16,6 +17,8 @@ namespace WatchIndex
         }
 
         public abstract void Authenticate(string userName, string password);
+
+        public abstract IEnumerable<string> GetListings();
 
         protected HtmlDocument Get(string url)
         {

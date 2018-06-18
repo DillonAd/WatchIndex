@@ -6,10 +6,10 @@ namespace WatchIndex
 {
     public class ListingScraper
     {
-        private readonly IEnumerable<IAggregator> _aggregators;
+        private readonly IEnumerable<Aggregator> _aggregators;
         private readonly IConfig _config;
 
-        public ListingScraper(IEnumerable<IAggregator> aggregators, IConfig config)
+        public ListingScraper(IEnumerable<Aggregator> aggregators, IConfig config)
         {
             _aggregators = aggregators;
             _config = config;

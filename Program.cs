@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using WatchIndex.Configuration;
 
 namespace WatchIndex
 {
@@ -7,7 +8,8 @@ namespace WatchIndex
         public static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
-                .AddTransient<IAggregator, NetflixAggregator>()
+                .AddTransient<Aggregator, NetflixAggregator>()
+                .AddTransient<IConfig, JsonConfig>()
                 .BuildServiceProvider();       
         }
     }
