@@ -40,7 +40,7 @@ namespace WatchIndex
                 htmlDoc = Get(listingUri + string.Format(formattableQueryString, c.ToString()));
                 results = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"title-card-*-*\"]/div/a/div/div/div");
 
-                if (results.Any())
+                if (results != null && results.Any())
                 {
                     foreach (var node in results)
                     {

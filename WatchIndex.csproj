@@ -10,4 +10,10 @@
     <PackageReference Include="selenium.webdriver" Version="3.12.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Drivers\chromedriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

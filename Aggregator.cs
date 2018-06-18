@@ -11,7 +11,7 @@ namespace WatchIndex
 
         protected Aggregator()
         {
-            _webDriver = new ChromeDriver();
+            _webDriver = new ChromeDriver("./Drivers/");
         }
 
         public abstract void Authenticate(string userName, string password);
