@@ -2,39 +2,34 @@ using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace WatchIndex
 {
     public abstract class Aggregator : IDisposable
     {
-        private readonly IWebDriver _webDriver;
+        protected readonly IWebDriver _webDriver;
 
-        public Aggregator()
+        protected Aggregator()
         {
             _webDriver = new ChromeDriver();
         }
 
-        public abstract Task Authenticate(string url, string userName, string password);
+        public abstract void Authenticate(string userName, string password);
 
-        protected async Task<HtmlDocument> GetAsync(string url)
+        protected HtmlDocument Get(string url)
         {
-            _webDriver.Url = uri;
-            var response = await _httpClient.GetAsync(uri);
-            response.EnsureSuccessStatusCode();
-
-            var result =  await response.Content.ReadAsStreamAsync();
-
+            _webDriver.Url = url;
+            
             var htmlDoc = new HtmlDocument();
-            htmlDoc.Load(result);
+            htmlDoc.LoadHtml(_webDriver.PageSource);
 
             return htmlDoc;
         }
 
         public void Dispose()
         {
-            _httpClient.Dispose();
+            _webDriver.Close();
+            _webDriver.Dispose();
         }
     }
 }

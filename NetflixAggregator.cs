@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,12 +10,12 @@ namespace WatchIndex
     {
         public NetflixAggregator() : base() { }
 
-        public override async Task Authenticate(string userName, string password)
+        public override void Authenticate(string userName, string password)
         {
             //TODO Implement Authentication
         }
 
-        public async Task<IEnumerable<string>> GetListings()
+        public IEnumerable<string> GetListings()
         {
             const string listingUri = "https://www.netflix.com/search";
             const string formattableQueryString = "?q={0}";
@@ -25,7 +26,7 @@ namespace WatchIndex
 
             for (char c = 'a'; c <= 'z'; c++)
             {
-                htmlDoc = await GetAsync(listingUri + string.Format(formattableQueryString, c.ToString()));
+                htmlDoc = Get(listingUri + string.Format(formattableQueryString, c.ToString()));
                 results = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"title-card-0-*\"]/div/a/div/div/div");
 
                 if (results.Any())

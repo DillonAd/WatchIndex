@@ -8,7 +8,7 @@ namespace WatchIndex
     {
         public static void Main(string[] args)
         {
-            var listings = GetAllListings().GetAwaiter().GetResult();
+            var listings = GetAllListings();
 
             foreach(var listing in listings)
             {
@@ -17,13 +17,13 @@ namespace WatchIndex
 
         }
 
-        private async static Task<IEnumerable<string>> GetAllListings()
+        private static IEnumerable<string> GetAllListings()
         {
             IEnumerable<string> listings;
 
             using (var netflix = new NetflixAggregator())
             {
-                listings = await netflix.GetListings();
+                listings = netflix.GetListings();
             }
 
             return listings;
