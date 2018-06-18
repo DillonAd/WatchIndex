@@ -12,7 +12,18 @@ namespace WatchIndex
 
         public override void Authenticate(string userName, string password)
         {
-            //TODO Implement Authentication
+            const string signInUrl = "https://www.netflix.com/login";
+
+            _webDriver.Url = signInUrl;
+
+            IWebElement userNameTb = _webDriver.FindElement(By.Id("email"));
+            userNameTb.SendKeys(userName);
+
+            IWebElement passwordTb = _webDriver.FindElement(By.Id("password"));
+            passwordTb.SendKeys(password);
+
+            IWebElement submitBtn = _webDriver.FindElement(By.ClassName("btn-submit"));
+            submitBtn.Click();
         }
 
         public IEnumerable<string> GetListings()
@@ -27,7 +38,7 @@ namespace WatchIndex
             for (char c = 'a'; c <= 'z'; c++)
             {
                 htmlDoc = Get(listingUri + string.Format(formattableQueryString, c.ToString()));
-                results = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"title-card-0-*\"]/div/a/div/div/div");
+                results = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"title-card-*-*\"]/div/a/div/div/div");
 
                 if (results.Any())
                 {
