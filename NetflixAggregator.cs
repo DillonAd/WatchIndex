@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WatchIndex
 {
-    public class NetflixAggregator : Aggregator
+    public class NetflixAggregator : Aggregator, IAggregator
     {
         public override string ServiceKey { get; }
 
