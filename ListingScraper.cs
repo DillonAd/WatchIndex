@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace WatchIndex
 {
-    public class ListingScraper
+    public class ListingScraper : IListingScraper
     {
         private readonly IEnumerable<Aggregator> _aggregators;
         private readonly IConfig _config;
