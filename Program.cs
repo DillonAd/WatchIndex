@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using WatchIndex.Configuration;
 
 namespace WatchIndex
@@ -8,9 +10,14 @@ namespace WatchIndex
         public static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
+                .AddTransient<IWebDriver, ChromeDriver>()
                 .AddTransient<Aggregator, NetflixAggregator>()
                 .AddTransient<IConfig, JsonConfig>()
-                .BuildServiceProvider();       
+                .AddTransient<IListingScraper, ListingScraper>()
+                .BuildServiceProvider();
+
+            var listingScraper = serviceProvider.GetService<IListingScraper>();
+            listingScraper.Scrape();
         }
     }
 }

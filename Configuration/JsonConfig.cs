@@ -10,7 +10,7 @@ namespace WatchIndex.Configuration
         {
             Credential[] credentials;
 
-            using(StreamReader reader = File.OpenText("./credentials.json"))
+            using(StreamReader reader = File.OpenText("credentials.json"))
             {
                 var serializer = JsonSerializer.Create();
                 credentials = (Credential[])serializer.Deserialize(reader, typeof(Credential[]));
