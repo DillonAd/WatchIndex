@@ -14,7 +14,6 @@ namespace WatchIndex
             {
                 Console.WriteLine(listing);
             }
-
         }
 
         private static IEnumerable<string> GetAllListings()
