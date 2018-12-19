@@ -1,6 +1,8 @@
-﻿namespace WatchIndex
+﻿using System;
+
+namespace WatchIndex
 {
-    public interface IListingScraper
+    public interface IListingScraper : IDisposable
     {
         void Scrape();
     }
