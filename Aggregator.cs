@@ -16,24 +16,24 @@ namespace WatchIndex
             _webDriver = webDriver;
         }
 
-        public abstract void Authenticate(string userName, string password);
+        public abstract void Authenticate(string userName, string password, string profileName);
 
         public abstract IEnumerable<string> GetListings();
 
-        protected HtmlDocument Get(string url)
-        {
-            _webDriver.Url = url;
-            
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(_webDriver.PageSource);
-
-            return htmlDoc;
-        }
-
         public void Dispose()
         {
-            _webDriver.Close();
-            _webDriver.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                _webDriver.Close();
+                _webDriver.Quit();
+                _webDriver.Dispose();
+            }
         }
     }
 }
