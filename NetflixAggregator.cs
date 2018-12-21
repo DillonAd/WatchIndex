@@ -45,7 +45,7 @@ namespace WatchIndex
 
             System.IO.File.WriteAllText("out.txt", string.Empty);
             for (char c = 'a'; c <= 'z'; c++)
-            {)
+            {
                 _webDriver.Url = listingUri + string.Format(formattableQueryString, c.ToString());
 
                 var lastPageLength = 0;
