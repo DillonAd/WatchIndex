@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace TitleStore
+namespace WatchIndex
 {
-    public sealed class TitleStore : IDisposable
+    public sealed class TitleStore : ITitleStore
     {
         private readonly StreamWriter _writer;
         private readonly string _fileName;
@@ -16,8 +16,8 @@ namespace TitleStore
             _writer = new StreamWriter(_fileName, false);
         }
 
-        public async Task Write(string content) =>
-            await _writer.WriteLineAsync(content);
+        public async Task Add(string title) =>
+            await _writer.WriteLineAsync(title);
 
         public async void Dispose()
         {
