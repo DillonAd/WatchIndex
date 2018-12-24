@@ -23,8 +23,10 @@ namespace WatchIndex
                     }
                 })
                 .AddSingleton<Aggregator, NetflixAggregator>()
+                //.AddSingleton<Aggregator, HuluAggregator>()
                 .AddSingleton<IConfig, JsonConfig>()
                 .AddSingleton<IListingScraper, ListingScraper>()
+                .AddSingleton<ITitleStore, TitleStore>()
                 .BuildServiceProvider();
 
             var listingScraper = serviceProvider.GetService<IListingScraper>();

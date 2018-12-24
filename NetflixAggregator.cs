@@ -57,7 +57,9 @@ namespace WatchIndex
                     IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
                     js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);");
                     System.Threading.Thread.Sleep(1000);
-                }while(lastPageLength < _webDriver.PageSource.Length);
+
+                }
+                while(lastPageLength < _webDriver.PageSource.Length);
 
                 var elements = _webDriver.FindElements(By.ClassName("fallback-text"))
                                          .Select(ele => ele.Text);

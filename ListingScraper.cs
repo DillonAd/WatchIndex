@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WatchIndex.Configuration;
 
@@ -9,11 +10,13 @@ namespace WatchIndex
     {
         private readonly IEnumerable<Aggregator> _aggregators;
         private readonly IConfig _config;
+        private readonly ITitleStore _titleStore;
 
-        public ListingScraper(IEnumerable<Aggregator> aggregators, IConfig config)
+        public ListingScraper(IEnumerable<Aggregator> aggregators, IConfig config, ITitleStore titleStore)
         {
             _aggregators = aggregators;
             _config = config;
+            _titleStore = titleStore;
         }
 
         public void Scrape()
@@ -30,7 +33,7 @@ namespace WatchIndex
 
             foreach(var listing in listings.OrderBy(l => l))
             {
-                Console.WriteLine(listing);
+                _titleStore.Add(listing);
             }
         }
 
