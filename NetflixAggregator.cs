@@ -8,12 +8,8 @@ namespace WatchIndex
 {
     public class NetflixAggregator : Aggregator
     {
-        public override string ServiceKey { get; }
-
-        public NetflixAggregator(IWebDriver webDriver) : base(webDriver) 
-        { 
-            ServiceKey = "Netflix";
-        }
+        public NetflixAggregator(IWebDriver webDriver, ITitleStore titleStore) 
+            : base("Netflix", webDriver, titleStore) { }
 
         public override void Authenticate(string userName, string password, string profileName)
         {

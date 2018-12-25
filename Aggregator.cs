@@ -7,13 +7,15 @@ namespace WatchIndex
 {
     public abstract class Aggregator : IDisposable
     {
-        public abstract string ServiceKey { get; }
+        public readonly string ServiceKey;
 
         protected readonly IWebDriver _webDriver;
+        protected readonly ITitleStore _titleStore;
 
-        protected Aggregator(IWebDriver webDriver)
+        protected Aggregator(string serviceKey, IWebDriver webDriver, ITitleStore titleStore)
         {
             _webDriver = webDriver;
+            _titleStore = titleStore;
         }
 
         public abstract void Authenticate(string userName, string password, string profileName);
@@ -33,6 +35,8 @@ namespace WatchIndex
                 _webDriver.Close();
                 _webDriver.Quit();
                 _webDriver.Dispose();
+
+                _titleStore.Dispose();
             }
         }
     }
