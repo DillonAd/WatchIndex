@@ -14,6 +14,8 @@ namespace WatchIndex
 
         protected Aggregator(string serviceKey, IWebDriver webDriver, ITitleStore titleStore)
         {
+            ServiceKey = serviceKey;
+            
             _webDriver = webDriver;
             _titleStore = titleStore;
         }
