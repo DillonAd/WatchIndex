@@ -15,8 +15,10 @@ namespace WatchIndex
         protected Aggregator(string serviceKey, IWebDriver webDriver, ITitleStore titleStore)
         {
             ServiceKey = serviceKey;
-            
+
             _webDriver = webDriver;
+            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30.00);
+
             _titleStore = titleStore;
         }
 
