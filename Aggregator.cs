@@ -2,6 +2,7 @@ using HtmlAgilityPack;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace WatchIndex
 {
@@ -41,6 +42,18 @@ namespace WatchIndex
                 _webDriver.Dispose();
 
                 _titleStore.Dispose();
+            }
+        }
+
+        protected void WaitFor(Func<bool> @event, int milliseconds)
+        {
+            const int waitInterval = 500;
+            int waitTime = 0;
+
+            while(waitTime >= milliseconds || @event.Invoke())
+            {
+                Thread.Sleep(waitInterval);
+                waitTime += waitInterval;
             }
         }
     }
