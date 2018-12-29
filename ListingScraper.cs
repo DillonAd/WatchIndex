@@ -21,14 +21,18 @@ namespace WatchIndex
 
         public void Scrape()
         {
-            var listings = new List<string>();
+            var listings = new HashSet<string>();
             Credential credentials;
 
             foreach(var aggregator in _aggregators)
             {
                 credentials = _config.GetCredentials(aggregator.ServiceKey);
                 aggregator.Authenticate(credentials.UserName, credentials.Password, credentials.ProfileName);
-                listings.AddRange(aggregator.GetListings());
+                
+                foreach(var listing in aggregator.GetListings())
+                {
+                    listings.Add(listing);
+                }
             }
 
             foreach(var listing in listings.OrderBy(l => l))
