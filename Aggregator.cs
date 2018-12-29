@@ -11,16 +11,13 @@ namespace WatchIndex
         public readonly string ServiceKey;
 
         protected readonly IWebDriver _webDriver;
-        protected readonly ITitleStore _titleStore;
 
-        protected Aggregator(string serviceKey, IWebDriver webDriver, ITitleStore titleStore)
+        protected Aggregator(string serviceKey, IWebDriver webDriver)
         {
             ServiceKey = serviceKey;
 
             _webDriver = webDriver;
             _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30.00);
-
-            _titleStore = titleStore;
         }
 
         public abstract void Authenticate(string userName, string password, string profileName);
@@ -40,8 +37,6 @@ namespace WatchIndex
                 _webDriver.Close();
                 _webDriver.Quit();
                 _webDriver.Dispose();
-
-                _titleStore.Dispose();
             }
         }
 

@@ -51,6 +51,8 @@ namespace WatchIndex
                 {
                     aggregator.Dispose();
                 }
+
+                _titleStore.Dispose();
             }
         }
     }

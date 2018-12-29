@@ -10,8 +10,8 @@ namespace WatchIndex
 {
     public class HuluAggregator : Aggregator
     {
-        public HuluAggregator(IWebDriver webDriver, ITitleStore titleStore) 
-            : base("Hulu", webDriver, titleStore) { }
+        public HuluAggregator(IWebDriver webDriver) 
+            : base("Hulu", webDriver) { }
 
         public override void Authenticate(string userName, string password, string profileName)
         {
@@ -39,14 +39,12 @@ namespace WatchIndex
 
             var profiles = _webDriver.FindElements(By.ClassName("Nav__label"));
             var profile = profiles.FirstOrDefault(p => p.Text == profileName);
-            
+
             profile.Click();
         }
 
         public override IEnumerable<string> GetListings()
         {
-            Console.WriteLine("HULU GET LISTINGS");
-            System.Threading.Thread.Sleep(30000);
             return new string[0];
         }
 

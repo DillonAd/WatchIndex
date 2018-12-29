@@ -8,8 +8,8 @@ namespace WatchIndex
 {
     public class NetflixAggregator : Aggregator
     {
-        public NetflixAggregator(IWebDriver webDriver, ITitleStore titleStore) 
-            : base("Netflix", webDriver, titleStore) { }
+        public NetflixAggregator(IWebDriver webDriver) 
+            : base("Netflix", webDriver) { }
 
         public override void Authenticate(string userName, string password, string profileName)
         {
@@ -39,7 +39,6 @@ namespace WatchIndex
 
             var listings = new HashSet<string>();
 
-            System.IO.File.WriteAllText("out.txt", string.Empty);
             for (char c = 'a'; c <= 'z'; c++)
             {
                 _webDriver.Url = listingUri + string.Format(formattableQueryString, c.ToString());
@@ -59,8 +58,6 @@ namespace WatchIndex
 
                 var elements = _webDriver.FindElements(By.ClassName("fallback-text"))
                                          .Select(ele => ele.Text);
-
-                System.IO.File.AppendAllText("out.txt", $"{c.ToString()} - {elements.Count()}\n");
 
                 foreach (var element in elements)
                 {
