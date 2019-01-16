@@ -53,8 +53,13 @@ namespace WatchIndex
 
             _webDriver.Url = listingUri;
 
+            var searchField = _webDriver.FindElement(By.ClassName("cu-search-input"));
+
             for (char c = 'a'; c <= 'z'; c++)
             {
+                searchField.Clear();
+                searchField.SendKeys(c.ToString());
+
                 var lastPageLength = 0;
 
                 do
@@ -68,7 +73,7 @@ namespace WatchIndex
                 }
                 while(lastPageLength < _webDriver.PageSource.Length);
 
-                var elements = _webDriver.FindElements(By.ClassName("fallback-text"))
+                var elements = _webDriver.FindElements(By.ClassName("ListItem__Content"))
                                          .Select(ele => ele.Text);
 
                 foreach (var element in elements)
