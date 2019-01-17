@@ -17,16 +17,16 @@ namespace WatchIndex
         {
             const string signInUrl = "https://auth.hulu.com/web/login";
 
-            _webDriver.Url = signInUrl;
+            WebDriver.Url = signInUrl;
 
             IWebElement submitBtn = GetLogInButton();
 
             do
             {
-                IWebElement userNameTb = _webDriver.FindElement(By.Name("email"));
+                IWebElement userNameTb = WebDriver.FindElement(By.Name("email"));
                 userNameTb.SendKeys(userName);
 
-                IWebElement passwordTb = _webDriver.FindElement(By.Name("password"));
+                IWebElement passwordTb = WebDriver.FindElement(By.Name("password"));
                 passwordTb.SendKeys(password);
 
                 submitBtn.Click();
@@ -37,7 +37,7 @@ namespace WatchIndex
             }
             while(submitBtn != null);
 
-            var profiles = _webDriver.FindElements(By.ClassName("Nav__label"));
+            var profiles = WebDriver.FindElements(By.ClassName("Nav__label"));
 
             var profile = profiles.FirstOrDefault(p => p.Text == profileName);
             profile.Click();
@@ -51,11 +51,11 @@ namespace WatchIndex
 
             var listings = new HashSet<string>();
 
-            _webDriver.Url = listingUri;
+            WebDriver.Url = listingUri;
 
-            var searchField = _webDriver.FindElement(By.ClassName("cu-search-input"));
+            var searchField = WebDriver.FindElement(By.ClassName("cu-search-input"));
 
-            for (char c = 'a'; c <= 'z'; c++)
+            foreach(var c in Alphabet)
             {
                 searchField.Clear();
                 searchField.SendKeys(c.ToString());
@@ -64,17 +64,17 @@ namespace WatchIndex
 
                 do
                 {
-                    lastPageLength = _webDriver.PageSource.Length;
+                    lastPageLength = WebDriver.PageSource.Length;
 
-                    IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
+                    IJavaScriptExecutor js = (IJavaScriptExecutor)WebDriver;
                     js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);");
                     System.Threading.Thread.Sleep(1000);
 
                 }
-                while(lastPageLength < _webDriver.PageSource.Length);
+                while(lastPageLength < WebDriver.PageSource.Length);
 
-                var elements = _webDriver.FindElements(By.ClassName("ListItem__Content"))
-                                         .Select(ele => ele.Text);
+                var elements = WebDriver.FindElements(By.ClassName("ListItem__Content"))
+                                        .Select(ele => ele.Text);
 
                 foreach (var element in elements)
                 {
@@ -86,7 +86,7 @@ namespace WatchIndex
         }
 
         private IWebElement GetLogInButton() =>
-                _webDriver.FindElements(By.ClassName("login-button"))
-                          .FirstOrDefault(e => e.Text == "LOG IN");
+                WebDriver.FindElements(By.ClassName("login-button"))
+                         .FirstOrDefault(e => e.Text == "LOG IN");
     }
 }

@@ -10,14 +10,23 @@ namespace WatchIndex
     {
         public readonly string ServiceKey;
 
-        protected readonly IWebDriver _webDriver;
+        protected readonly IWebDriver WebDriver;
+        protected readonly IList<char> Alphabet;
 
         protected Aggregator(string serviceKey, IWebDriver webDriver)
         {
             ServiceKey = serviceKey;
 
-            _webDriver = webDriver;
-            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30.00);
+            WebDriver = webDriver;
+            WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30.00);
+
+            Alphabet = new List<char>();
+            Alphabet.Add(' ');
+
+            for (char c = 'a'; c <= 'z'; c++)
+            {
+                Alphabet.Add(c);
+            }
         }
 
         public abstract void Authenticate(string userName, string password, string profileName);
@@ -34,9 +43,9 @@ namespace WatchIndex
         {
             if(disposing)
             {
-                _webDriver.Close();
-                _webDriver.Quit();
-                _webDriver.Dispose();
+                WebDriver.Close();
+                WebDriver.Quit();
+                WebDriver.Dispose();
             }
         }
 

@@ -15,18 +15,18 @@ namespace WatchIndex
         {
             const string signInUrl = "https://www.netflix.com/login";
 
-            _webDriver.Url = signInUrl;
+            WebDriver.Url = signInUrl;
 
-            IWebElement userNameTb = _webDriver.FindElement(By.Id("id_userLoginId"));
+            IWebElement userNameTb = WebDriver.FindElement(By.Id("id_userLoginId"));
             userNameTb.SendKeys(userName);
 
-            IWebElement passwordTb = _webDriver.FindElement(By.Id("id_password"));
+            IWebElement passwordTb = WebDriver.FindElement(By.Id("id_password"));
             passwordTb.SendKeys(password);
 
-            IWebElement submitBtn = _webDriver.FindElement(By.ClassName("btn-submit"));
+            IWebElement submitBtn = WebDriver.FindElement(By.ClassName("btn-submit"));
             submitBtn.Click();
 
-            var profiles = _webDriver.FindElements(By.ClassName("profile-name"));
+            var profiles = WebDriver.FindElements(By.ClassName("profile-name"));
             
             var profile = profiles.FirstOrDefault(p => p.Text == profileName);
             profile.Click();
@@ -39,25 +39,25 @@ namespace WatchIndex
 
             var listings = new HashSet<string>();
 
-            for (char c = 'a'; c <= 'z'; c++)
+            foreach (var c in Alphabet)
             {
-                _webDriver.Url = listingUri + string.Format(formattableQueryString, c.ToString());
+                WebDriver.Url = listingUri + string.Format(formattableQueryString, c.ToString());
 
                 var lastPageLength = 0;
 
                 do
                 {
-                    lastPageLength = _webDriver.PageSource.Length;
+                    lastPageLength = WebDriver.PageSource.Length;
 
-                    IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
+                    IJavaScriptExecutor js = (IJavaScriptExecutor)WebDriver;
                     js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);");
                     System.Threading.Thread.Sleep(1000);
 
                 }
-                while(lastPageLength < _webDriver.PageSource.Length);
+                while(lastPageLength < WebDriver.PageSource.Length);
 
-                var elements = _webDriver.FindElements(By.ClassName("fallback-text"))
-                                         .Select(ele => ele.Text);
+                var elements = WebDriver.FindElements(By.ClassName("fallback-text"))
+                                        .Select(ele => ele.Text);
 
                 foreach (var element in elements)
                 {
