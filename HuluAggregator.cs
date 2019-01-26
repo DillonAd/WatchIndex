@@ -57,28 +57,45 @@ namespace WatchIndex
 
             foreach(var c in Alphabet)
             {
-                searchField.Clear();
-                searchField.SendKeys(c.ToString());
+                Search(searchField, c.ToString());
+            }
 
-                var lastPageLength = 0;
+            return listings;
+        }
 
-                do
+        private IEnumerable<string> Search(in IWebElement searchField, string s)
+        {
+            var listings = new List<string>();
+        
+            searchField.Clear();
+            searchField.SendKeys(s);
+
+            var lastPageLength = 0;
+
+            do
+            {
+                lastPageLength = WebDriver.PageSource.Length;
+
+                IJavaScriptExecutor js = (IJavaScriptExecutor)WebDriver;
+                js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);");
+                System.Threading.Thread.Sleep(1000);
+
+            }
+            while(lastPageLength < WebDriver.PageSource.Length);
+
+            var elements = WebDriver.FindElements(By.ClassName("ListItem__Content"))
+                                    .Select(ele => ele.Text);
+
+            foreach (var element in elements)
+            {
+                listings.Add(element);
+            }
+
+            if(s.Length < 2)
+            {
+                foreach(var c in Alphabet)
                 {
-                    lastPageLength = WebDriver.PageSource.Length;
-
-                    IJavaScriptExecutor js = (IJavaScriptExecutor)WebDriver;
-                    js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);");
-                    System.Threading.Thread.Sleep(1000);
-
-                }
-                while(lastPageLength < WebDriver.PageSource.Length);
-
-                var elements = WebDriver.FindElements(By.ClassName("ListItem__Content"))
-                                        .Select(ele => ele.Text);
-
-                foreach (var element in elements)
-                {
-                    listings.Add(element);
+                    listings.AddRange(Search(searchField, s + c.ToString()));
                 }
             }
 
